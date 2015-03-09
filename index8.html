@@ -1,0 +1,66 @@
+<!-- slide_show_cloud/index8.htmlと同じ -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>jQueryでスライドショー</title>
+	<style>
+    	/* 　一度画像を全てを非表示にして、absoluteを指定して画像を重ねる */
+		#tw_imgs img{
+			display:none;
+			position: absolute;
+			cursor: pointer;
+		}
+		/* 1枚目の画像だけを表示 */
+		#tw_imgs .tw_img:nth-child(1) {
+			display:block;
+		}
+    </style>
+
+</head>
+<body>
+	<div id="tw_imgs">
+		<img class="tw_img" src="https://pbs.twimg.com/media/B-RbREuCYAA4F8I.jpg">
+		<img class="tw_img" src="https://pbs.twimg.com/media/B8vXg0kCAAEDfqC.jpg">
+		<img class="tw_img" src="https://pbs.twimg.com/media/B81PD8JCYAIl6kC.png">
+		<img class="tw_img" src="https://pbs.twimg.com/media/B81PD3KCQAA9TyY.png">
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>
+		function check(){
+			var image = document.getElementById("tw_imgs");
+			var num = image.getElementsByTagName("img");
+			var len = num.length;
+			return len;
+		}
+		var n = check();
+
+		// イベントハンドラ、クロージャについて
+		// http://lifelog.main.jp/wordpress/?p=884
+		// http://dev.classmethod.jp/･･･/javascript-closure･･･/
+		// 即時関数について
+		// http://dotinstall.com/lessons/basic_javascript_v2/26714
+
+		for (var i = 0; i <= n - 1 ; i++) {
+			(function(num){
+				$(".tw_img").eq(num).click(function() {
+					$(this).fadeOut(800);
+					$(this).next().fadeIn(800);
+					// (n - 1)回目のときは最初の画像に戻る
+					if (num == (n - 1)) {
+						// console.log(1);
+						$(".tw_img").eq(0).fadeIn(800);
+					}
+				});
+			})(i);
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
